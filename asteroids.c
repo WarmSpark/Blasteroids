@@ -2,6 +2,7 @@
 // Created by divyansh_1410 on 23/03/26.
 //
 #include <math.h>
+#include <raymath.h>
 
 #include "raylib.h"
 #include "aestroids.h"
@@ -24,6 +25,12 @@ void SpawnAstroids(Astroid astroids[],Vector2 position,AstroidSize size)
             if (size==LARGE)astroids[i].radius=60.0f;
             if (size==MEDIUM)astroids[i].radius=30.0f;
             if (size==SMALL)astroids[i].radius=15.0f;
+            for (int j=0;j<8;j++) {
+                float angle=(j*45.0f)*DEG2RAD;
+                float dist=GetRandomValue((int)(astroids[i].radius*0.6f),(int)(astroids[i].radius));
+                astroids[i].points[j].x=sinf(angle)*dist;
+                astroids[i].points[j].y=-cosf(angle)*dist;
+            }
             float angle=GetRandomValue(5,175)*DEG2RAD;
             float speed=GetRandomValue(45,200);
             astroids[i].velocity.x=sinf(angle)*speed;
@@ -51,7 +58,22 @@ void DrawAstroids(Astroid astroids[])
 {
     for (int i=0;i<MAX_AESTROIDS;i++) {
         if (astroids[i].active) {
-            DrawCircleLinesV(astroids[i].position,astroids[i].radius,BLUE);
+            for (int j = 0; j < 8; j++) {
+                DrawTriangle(
+                    astroids[i].position,
+
+                    Vector2Add(astroids[i].position, astroids[i].points[(j+1) % 8]),
+                    Vector2Add(astroids[i].position, astroids[i].points[j]),
+                    DARKGRAY
+                );
+            }
+            for (int j=0;j<8;j++){
+                DrawLineV(
+                    Vector2Add(astroids[i].position,astroids[i].points[j]),
+                    Vector2Add(astroids[i].position,astroids[i].points[(j+1)%8]),
+                    WHITE
+                    );
+            }
         }
     }
 }

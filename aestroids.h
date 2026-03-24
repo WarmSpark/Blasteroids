@@ -17,6 +17,7 @@ typedef enum {
 typedef struct {
     Vector2 position;
     Vector2 velocity;
+    Vector2 points[8];
     float radius;
     bool active;
     AstroidSize size;
