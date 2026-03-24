@@ -10,5 +10,5 @@
 #include "raylib.h"
 #include "particle.h"
 
-void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player,Particle particle[]);
+void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player,Particle particle[],Sound sound);
 #endif //COLLISION_H

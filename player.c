@@ -21,9 +21,10 @@ Player InitPlayer(void) {
     p.health=100;
     p.score=0;
     p.lives=3;
+    p.shooterTimer=0.0f;
     return p;
 }
-void UpdatePlayer(Player *player) {
+void UpdatePlayer(Player *player,Sound sound) {
 
     float dt=GetFrameTime();
     if (IsKeyDown(KEY_LEFT)||IsKeyDown(KEY_A)) {
@@ -38,11 +39,14 @@ void UpdatePlayer(Player *player) {
 
 
     if (IsKeyDown(KEY_UP)||IsKeyDown(KEY_W)) {
+        if (!IsSoundPlaying(sound)){PlaySound(sound);}
+
         float rad=player->rotation*DEG2RAD;
         player->velocity.x+=sinf(rad)*PLAYER_SPEED*dt;
         player->velocity.y-=cosf(rad)*PLAYER_SPEED*dt;
 
     }
+    else {StopSound(sound);}
     //friction in action
     player->velocity.x *= powf(FRICTION,dt * 60.0f);
     player->velocity.y *= powf(FRICTION, dt * 60.0f);

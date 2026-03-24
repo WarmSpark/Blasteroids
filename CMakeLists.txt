@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 4.3)
 project(test C)
 
 find_package(raylib REQUIRED)
-
+file(COPY Sounds DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(test main.c
         player.c
         bullet.c

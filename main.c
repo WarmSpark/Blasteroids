@@ -4,6 +4,8 @@
 #include "aestroids.h"
 #include "collision.h"
 #include "particle.h"
+#include <stddef.h>
+#include <stdio.h>
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 #define FPS 60
@@ -37,6 +39,16 @@ void Respawn(Astroid astroids[]) {
 int main(void) {
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Blasteroids");
+    InitAudioDevice();
+    Sound shoot = LoadSound("Sounds/laser.wav");
+    if (shoot.stream.buffer == NULL) printf("shoot sound not loaded!\n");
+
+    Sound engine = LoadSound("Sounds/thrust.wav");
+    if (engine.stream.buffer == NULL) printf("engine sound not loaded!\n");
+
+    Sound explode = LoadSound("Sounds/explosion.wav");
+    if (explode.stream.buffer == NULL) printf("explode sound not loaded!\n");
+
     SetTargetFPS(FPS);
     Astroid astroids[MAX_AESTROIDS];
     Player player = InitPlayer();
@@ -49,15 +61,21 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         if (state==PLAYING) {
-            UpdatePlayer(&player);
+            UpdatePlayer(&player,engine);
             UpdateBullets(bullets);
             UpdateAstroids(astroids);
-            if (IsKeyDown(KEY_SPACE)) {
-                FireBullet(bullets,player.position,player.rotation);
+
+            if (IsKeyPressed(KEY_SPACE)) {
+                FireBullet(bullets, player.position, player.rotation);
+                PlaySound(shoot);
+                player.shooterTimer = 0.3f;
             }
+            player.shooterTimer -= GetFrameTime();
+            if (player.shooterTimer<=0) {StopSound(shoot);}
+
             Respawn(astroids);
             UpdateParticle(particle);
-            CheckCollisions(bullets,astroids,&player,particle);
+            CheckCollisions(bullets,astroids,&player,particle,explode);
             if (player.lives<=0)state=GAME_OVER;
             BeginDrawing();
             ClearBackground(BLACK);
@@ -99,7 +117,9 @@ int main(void) {
             EndDrawing();
         }
     }
-
+    UnloadSound(shoot);
+    UnloadSound(engine);
+    UnloadSound(explode);
     CloseWindow();
     return 0;
 }
