@@ -31,10 +31,6 @@ void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player,Particle
                 astroids[k].active=false;
                 player->position = (Vector2){ 1280/2, 720/2 };
                 player->velocity = (Vector2){ 0, 0 };
-                if (player->lives<=0) {
-                    player->score=0;
-                    player->lives=3;
-                }
             }
         }
     }

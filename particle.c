@@ -49,7 +49,7 @@ void DrawParticle(Particle particle[]) {
     for (int i = 0; i < MAX_PARTICLES; i++) {
         if (particle[i].active) {
             float alpha =(particle[i].lifetime/particle[i].maxLifetime);
-            DrawCircleV(particle[i].position,2,Fade(BLUE,alpha));
+            DrawCircleV(particle[i].position,2,Fade(WHITE,alpha));
         }
     }
 }
