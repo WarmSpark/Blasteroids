@@ -3,6 +3,7 @@
 #include "bullets.h"
 #include "aestroids.h"
 #include "collision.h"
+#include "particle.h"
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 #define FPS 60
@@ -33,9 +34,10 @@ int main(void) {
     Astroid astroids[MAX_AESTROIDS];
     Player player = InitPlayer();
     Bullet bullets[MAX_BULLETS];
-
+    Particle particle[MAX_PARTICLES];
     InitBullets(bullets);
     InitAstroids(astroids);
+    InitParticle(particle);
     Respawn(astroids);
 
     while (!WindowShouldClose()) {
@@ -46,12 +48,14 @@ int main(void) {
             FireBullet(bullets,player.position,player.rotation);
         }
         Respawn(astroids);
-        CheckCollisions(bullets,astroids,&player);
+        UpdateParticle(particle);
+        CheckCollisions(bullets,astroids,&player,particle);
         BeginDrawing();
         ClearBackground(BLACK);
         DrawPlayer(&player);
         DrawBullets(bullets);
         DrawAstroids(astroids);
+        DrawParticle(particle);
         DrawText(TextFormat("Score: %d", player.score), 10, 10, 20, WHITE);
         DrawText(TextFormat("Lives: %d", player.lives), 10, 35, 20, WHITE);
         EndDrawing();

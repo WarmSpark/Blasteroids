@@ -8,6 +8,7 @@
 #include "aestroids.h"
 #include "bullets.h"
 #include "raylib.h"
+#include "particle.h"
 
-void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player);
+void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player,Particle particle[]);
 #endif //COLLISION_H

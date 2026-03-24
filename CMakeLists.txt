@@ -7,5 +7,7 @@ add_executable(test main.c
         player.c
         bullet.c
         asteroids.c
-        collision.c)
+        collision.c
+        particle.c
+)
 target_link_libraries(test raylib m)

@@ -6,7 +6,7 @@
 #include "raymath.h"
 #include "collision.h"
 
-void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player) {
+void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player,Particle particle[]) {
     int index=0;
     for (int i=0;i<MAX_BULLETS;i++) {
         if (bullets[i].active) {
@@ -16,6 +16,7 @@ void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player) {
                         bullets[i].active=false;
                         player->score+=100;
                         index=j;
+                        SpawnExplosion(particle,astroids[j].position,100);
                         SpiltAstroid(astroids,index);
                     }
                 }
@@ -25,6 +26,7 @@ void CheckCollisions(Bullet bullets[],Astroid astroids[],Player *player) {
     for (int k=0;k<MAX_AESTROIDS;k++) {
         if (astroids[k].active) {
             if (Vector2Distance(player->position,astroids[k].position)<astroids[k].radius+10) {
+                SpawnExplosion(particle,astroids[k].position,40);
                 player->lives--;
                 astroids[k].active=false;
                 player->position = (Vector2){ 1280/2, 720/2 };
