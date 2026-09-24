@@ -9,5 +9,7 @@ add_executable(test main.c
         asteroids.c
         collision.c
         particle.c
+        starfield.c
+        crates.c
 )
 target_link_libraries(test raylib m)

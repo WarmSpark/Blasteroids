@@ -2,15 +2,20 @@
 #define PLAYER_H
 #include "raylib.h"
 typedef struct {
-    Vector2 position;
-    Vector2 velocity;
-    float rotation;
-    int health;
-    float shooterTimer;
-    int score;
-    int lives;
+  Vector2 position;
+  Vector2 velocity;
+  float rotation;
+  int health;
+  float shooterTimer;
+  int score;
+  int lives;
+  float fuel;
+  float maxFuel;
+  int ammo;
+  int maxAmmo;
+  float invulnerableTimer;
 } Player;
 Player InitPlayer(void);
-void UpdatePlayer(Player *player,Sound sound);
+void UpdatePlayer(Player *player, Sound sound);
 void DrawPlayer(const Player *player);
-#endif //PLAYER_H
+#endif // PLAYER_H

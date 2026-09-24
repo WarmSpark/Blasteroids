@@ -8,15 +8,16 @@
 #include "stdbool.h"
 #define MAX_PARTICLES 200
 typedef struct {
-        Vector2 position;
-        Vector2 velocity;
-        float lifetime;
-        float maxLifetime;
-        bool active;
-}Particle;
+  Vector2 position;
+  Vector2 velocity;
+  Color color;
+  float lifetime;
+  float maxLifetime;
+  bool active;
+} Particle;
 void InitParticle(Particle particle[]);
 void UpdateParticle(Particle particle[]);
 void DrawParticle(Particle particle[]);
-void SpawnExplosion(Particle particle[],Vector2 position,int count);
-
-#endif //PARTICLE_H
+void SpawnExplosion(Particle particle[], Vector2 position, int count);
+void SpawnExhaust(Particle particle[], Vector2 position, float rotation);
+#endif // PARTICLE_H
